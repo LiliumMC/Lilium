@@ -13,6 +13,12 @@
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="SharpZipLib" Version="1.1.0" />
+    <PackageReference Include="YamlDotNet" Version="6.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Util\" />
   </ItemGroup>
 
 </Project>
