@@ -12,7 +12,7 @@ namespace Lilium.Net
     {
         string getHost();
         int getPort();
-        PacketType getPacketType();
+        PacketProtocol getPacketProtocol();
         int ProtocolVersion { get; set; }
         int CompressionTreshold { get; set; }
         Task Send(Packet pcket);
