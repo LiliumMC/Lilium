@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Net\IO\" />
     <Folder Include="Protocol\PacketLib\Packets\Client\" />
     <Folder Include="Protocol\PacketLib\Packets\Server\" />
     <Folder Include="Util\" />

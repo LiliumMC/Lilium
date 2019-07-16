@@ -1,6 +1,7 @@
 ﻿using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
+using Lilium.Net.IO;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,6 +1,7 @@
 ﻿using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
+using Lilium.Net.IO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,7 +26,7 @@ namespace Lilium.Net.Handlers
 
         protected override void Encode(IChannelHandlerContext ctx, OutputBuffer msg, List<object> output)
         {
-            IByteBuffer buf = Unpooled.Buffer();
+            IByteBuffer buf = ctx.Allocator.Buffer();
             OutputBuffer cache = new OutputBuffer(buf);
             int length = msg.ReadableBytes;
             cache.WriteVarInt(length);
