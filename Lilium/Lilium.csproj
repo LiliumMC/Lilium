@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Protocol\PacketLib\Packets\Client\" />
-    <Folder Include="Protocol\PacketLib\Packets\Server\" />
     <Folder Include="Util\" />
   </ItemGroup>
 

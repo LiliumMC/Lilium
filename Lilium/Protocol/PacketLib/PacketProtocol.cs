@@ -1,4 +1,5 @@
 ﻿using Lilium.Crypto;
+using Lilium.Protocol.PacketLib.Packets.Server;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,7 @@ namespace Lilium.Protocol.PacketLib
 {
     abstract class PacketProtocol
     {
+        public int Protocol { get; set; }
         private Dictionary<int, Type> incoming = new Dictionary<int, Type>();
         private Dictionary<Type, int> outgoing = new Dictionary<Type, int>();
 
@@ -23,6 +25,14 @@ namespace Lilium.Protocol.PacketLib
         public void RegisterOutgoing<T>(int id) where T : Packet
         {
             outgoing.Add(typeof(T), id);
+        }
+        public Packet createIncomingPacket(int id)
+        {
+            if (incoming.ContainsKey(id))
+            {
+                return (Packet)incoming[id];
+            }
+            return new UnknownPacket();
         }
     }
 }

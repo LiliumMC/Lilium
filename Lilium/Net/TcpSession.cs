@@ -8,6 +8,7 @@ using DotNetty.Buffers;
 using Lilium.Protocol.PacketLib;
 using Lilium.Protocol;
 using Lilium.Net.Handlers;
+using Lilium.Protocol.Message;
 
 namespace Lilium.Net
 {
@@ -15,18 +16,18 @@ namespace Lilium.Net
     {
         private string Host { get; set; }
         private int Port { get; set; }
-        private PacketType packetType { get; set; }
+        private PacketProtocol packetProtocol { get; set; }
         private List<ISessionListener> listeners = new List<ISessionListener>();
         protected IChannel channel;
         public int ProtocolVersion { get; set; }
         public int CompressionTreshold { get; set; } = 0;
         protected bool disconnected = false;
 
-        public TcpSession(string host,int port,PacketType type)
+        public TcpSession(string host,int port,PacketProtocol type)
         {
             Host = host;
             Port = port;
-            packetType = type;
+            packetProtocol = type;
             ProtocolVersion = type.Protocol;
         }
         public string getHost()
@@ -37,9 +38,9 @@ namespace Lilium.Net
         {
             return Port;
         }
-        public PacketType getPacketType()
+        public PacketProtocol getPacketProtocol()
         {
-            return packetType;
+            return packetProtocol;
         }
         public async Task Send(Packet packet)
         {
@@ -67,8 +68,6 @@ namespace Lilium.Net
                     channel.Pipeline.Remove("compression");
             }
         }
-        public abstract Task Connect();
-        public abstract void Disconnect(DisconnectReason reason, string message);
         public void AddListener(ISessionListener paramListener)
         {
             listeners.Add(paramListener);
@@ -95,6 +94,14 @@ namespace Lilium.Net
             this.channel = ctx.Channel;
             CallEvent(new ConnectedEvent(this));
         }
+
+        public override void ChannelInactive(IChannelHandlerContext context)
+        {
+            if (this.channel == context.Channel)
+            {
+                this.Disconnect(DisconnectReason.ConnectionLost,"Connection Lost.");
+            }
+        }
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
         {
             DisconnectReason reason = DisconnectReason.ConnectFailed;
@@ -105,6 +112,18 @@ namespace Lilium.Net
         protected override void ChannelRead0(IChannelHandlerContext ctx, Packet msg)
         {
             
+        }
+
+        public void Connect()
+        {
+        }
+
+        public void Disconnect(DisconnectReason reason, string message)
+        {
+            if (this.disconnected)
+                return;
+
+            this.disconnected = true;
         }
     }
 }

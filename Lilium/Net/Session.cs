@@ -16,7 +16,7 @@ namespace Lilium.Net
         int ProtocolVersion { get; set; }
         int CompressionTreshold { get; set; }
         Task Send(Packet pcket);
-        Task Connect();
+        void Connect();
         void Disconnect(DisconnectReason reason, string message);
         void AddListener(ISessionListener paramListener);
         void RemoveListener(ISessionListener paramListener);

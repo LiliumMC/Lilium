@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lilium.Protocol.PacketLib
+namespace Lilium.Protocol.PacketLib.Packets.Server
 {
-    public interface Packet
+    class UnknownPacket:Packet
     {
     }
 }

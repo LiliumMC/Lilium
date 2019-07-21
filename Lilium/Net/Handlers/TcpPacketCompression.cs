@@ -8,15 +8,15 @@ using System.Text;
 
 namespace Lilium.Net.Handlers
 {
-    class TcpPacketCompression: ByteToMessageDecoder
+    class TcpPacketCompression: MessageToMessageCodec<IByteBuffer,IByteBuffer>
     {
-        Session session;
+        private Session session;
         public TcpPacketCompression(Session session)
         {
             this.session = session;
         }
 
-        protected override void Decode(IChannelHandlerContext context, IByteBuffer input, List<object> output)
+        protected override void Decode(IChannelHandlerContext ctx, IByteBuffer input, List<object> output)
         {
             InputBuffer packetData = new InputBuffer(input);
             int sizeUncompressed = packetData.ReadVarInt();
@@ -27,6 +27,13 @@ namespace Lilium.Net.Handlers
                 output.Add(uncompressed);
                 return;
             }
+            else
+                output.Add(input.ReadBytes(input.ReadableBytes));
+        }
+
+        protected override void Encode(IChannelHandlerContext ctx, IByteBuffer msg, List<object> output)
+        {
+            throw new NotImplementedException();
         }
     }
 }
