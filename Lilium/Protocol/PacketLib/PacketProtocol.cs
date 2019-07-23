@@ -1,4 +1,5 @@
 ﻿using Lilium.Crypto;
+using Lilium.Net;
 using Lilium.Protocol.PacketLib.Packets.Server;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Lilium.Protocol.PacketLib
         private Dictionary<Type, int> outgoing = new Dictionary<Type, int>();
 
         public abstract CryptoHandler getCrypto();
+        public abstract void newServerSession(Session session);
         public void ClearPackets()
         {
             this.incoming.Clear();

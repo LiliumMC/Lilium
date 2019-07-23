@@ -14,30 +14,37 @@ namespace Lilium.Net.Handlers
     {
         string host;
         int port;
-        Server server;
+        HandleServer server;
 
         private IEventLoopGroup group;
         private IChannel channel;
 
-        public TcpConnectionListener(string host,int port,Server server)
+        public TcpConnectionListener(string host,int port, HandleServer server)
         {
             this.host = host;
             this.port = port;
             this.server = server;
         }
-        public async Task Bind(int inetPort)
+
+        public bool isListening { get
+            {
+                return this.channel != null && this.channel.Open;
+            } }
+
+        public async Task Bind()
         {
             if (this.group != null)
                 return;
             this.group = new MultithreadEventLoopGroup();
-            Bootstrap bootstrap = new Bootstrap();
+            ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap
-                .Channel<TcpSocketChannel>()
-                .Handler(new ActionChannelInitializer<IChannel>(channel =>
+                .Channel<TcpServerSocketChannel>()
+                .ChildHandler(new ActionChannelInitializer<ISocketChannel>(channel =>
                 {
                     IPEndPoint address = (IPEndPoint)channel.RemoteAddress;
-                    PacketProtocol protocol = server.createPacketProtocol();
+                    PacketProtocol protocol = server.CreatePacketProtocol();
                     TcpSession session = new TcpServerSession(address.Address.ToString(), address.Port, protocol, server);
+                    session.getPacketProtocol().newServerSession(session);
 
                     channel.Configuration.SetOption(ChannelOption.IpTos, 18);
                     channel.Configuration.SetOption(ChannelOption.TcpNodelay, false);
@@ -49,7 +56,7 @@ namespace Lilium.Net.Handlers
                     pipeline.AddLast("manager", session);
 
                 }))
-                .Group(group).LocalAddress(inetPort);
+                .Group(group).LocalAddress(port);
             channel=await bootstrap.BindAsync();
         }
 

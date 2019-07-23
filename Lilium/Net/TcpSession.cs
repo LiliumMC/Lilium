@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using DotNetty.Buffers;
 using Lilium.Protocol.PacketLib;
 using Lilium.Protocol;
 using Lilium.Net.Handlers;
 using Lilium.Protocol.Message;
+using Lilium.Net.Event;
+using System.Threading;
 
 namespace Lilium.Net
 {
@@ -21,6 +22,15 @@ namespace Lilium.Net
         protected IChannel channel;
         public int ProtocolVersion { get; set; }
         public int CompressionTreshold { get; set; } = 0;
+        private List<Packet> packets = new List<Packet>();
+        private AutoResetEvent packetHandleEvent = new AutoResetEvent(false);
+        private Thread packetHandleThread;
+
+        public bool Connected { get
+            {
+                return this.channel != null && this.channel.Open && !this.disconnected;
+            } }
+
         protected bool disconnected = false;
 
         public TcpSession(string host,int port,PacketProtocol type)
@@ -88,10 +98,29 @@ namespace Lilium.Net
         {
             if(disconnected || channel != null)
             {
-                ctx.Channel.CloseAsync();
+                ctx.Channel.CloseAsync().Wait();
                 return;
             }
             this.channel = ctx.Channel;
+            this.packetHandleThread = new Thread(new ThreadStart(() =>
+              {
+                  try
+                  {
+                      while (!disconnected)
+                      {
+                          packetHandleEvent.WaitOne();
+                          Packet packet = packets[0];
+                          packets.RemoveAt(0);
+                          CallEvent(new PacketReceivedEvent(this, packet));
+                      }
+                  }
+                  catch (Exception e)
+                  {
+                      ExceptionCaught(null, e);
+                  }
+              }));
+            this.packetHandleThread.IsBackground = true;
+            this.packetHandleThread.Start();
             CallEvent(new ConnectedEvent(this));
         }
 
@@ -111,7 +140,8 @@ namespace Lilium.Net
 
         protected override void ChannelRead0(IChannelHandlerContext ctx, Packet msg)
         {
-            
+            packets.Add(msg);
+            packetHandleEvent.Set();
         }
 
         public void Connect()
@@ -124,6 +154,11 @@ namespace Lilium.Net
                 return;
 
             this.disconnected = true;
+            if (this.packetHandleThread != null)
+            {
+                this.packetHandleThread.Abort();
+                this.packetHandleThread = null;
+            }
         }
     }
 }

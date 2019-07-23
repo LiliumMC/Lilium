@@ -7,8 +7,9 @@ namespace Lilium.Net
 {
     interface ConnectionListener
     {
-        Task Bind(int inetPort);
+        Task Bind();
         Task Close();
+        bool isListening { get; }
         string getHost();
         int getPort();
     }

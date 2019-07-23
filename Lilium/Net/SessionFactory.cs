@@ -6,6 +6,6 @@ namespace Lilium.Net
 {
     interface SessionFactory
     {
-        public ConnectionListener createServerListener(Server server);
+        ConnectionListener createServerListener(HandleServer server);
     }
 }
