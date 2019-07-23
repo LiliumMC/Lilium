@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lilium.Net.IO
 {
-    class OutputBuffer
+    public class OutputBuffer
     {
         IByteBuffer buf;
         public int ReadableBytes

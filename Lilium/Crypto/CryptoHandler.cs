@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Lilium.Crypto
 {
-    class CryptoHandler
+    public class CryptoHandler
     {
         BufferedBlockCipher dec;
         BufferedBlockCipher enc;

@@ -22,7 +22,9 @@ namespace Lilium.Net.Handlers
         {
             InputBuffer input = new InputBuffer(msg);
             int id = input.ReadVarInt();
+            Debug.Log("id:"+id);
             Packet packet = this.session.getPacketProtocol().createIncomingPacket(id);
+            packet.Read(input);
             output.Add(packet);
         }
 

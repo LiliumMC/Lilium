@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Lilium.Net
 {
-    interface Session
+    public interface Session
     {
         string getHost();
         int getPort();

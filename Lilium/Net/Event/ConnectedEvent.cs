@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lilium.Net.Event
 {
-    class ConnectedEvent:ISessionEvent
+    public class ConnectedEvent:ISessionEvent
     {
         private Session session;
         public ConnectedEvent(Session session)

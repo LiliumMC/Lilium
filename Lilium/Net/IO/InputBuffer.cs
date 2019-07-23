@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lilium.Net.IO
 {
-    class InputBuffer
+    public class InputBuffer
     {
         IByteBuffer buf;
         public int ReadableBytes
@@ -50,6 +50,19 @@ namespace Lilium.Net.IO
         public IByteBuffer ReadBytes(int length)
         {
             return buf.ReadBytes(length);
+        }
+        public string ReadString()
+        {
+            int len = ReadVarInt();
+            return Encoding.UTF8.GetString(ReadData(len));
+        }
+        public short ReadShort()
+        {
+            return buf.GetShort(0);
+        }
+        public int ReadUnsignedShort()
+        {
+            return buf.GetShort(0) & 0xFFFF;
         }
     }
 }

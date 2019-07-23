@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Lilium.Protocol.PacketLib
 {
-    abstract class PacketProtocol
+    public abstract class PacketProtocol
     {
         public int Protocol { get; set; }
         private Dictionary<int, Type> incoming = new Dictionary<int, Type>();
@@ -32,7 +32,7 @@ namespace Lilium.Protocol.PacketLib
         {
             if (incoming.ContainsKey(id))
             {
-                return (Packet)incoming[id];
+                return (Packet)Activator.CreateInstance(incoming[id]);
             }
             return new UnknownPacket();
         }

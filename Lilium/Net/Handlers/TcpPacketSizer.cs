@@ -17,11 +17,10 @@ namespace Lilium.Net.Handlers
         }
         protected override void Decode(IChannelHandlerContext context, IByteBuffer input, List<object> output)
         {
-            Debug.Log("Handle Packet");
             InputBuffer ib = new InputBuffer(input);
             int size = ib.ReadVarInt();
             InputBuffer packetData = new InputBuffer(ib.ReadBytes(size));
-            output.Add(packetData.ReadData(packetData.ReadableBytes));
+            output.Add(packetData.ReadBytes(packetData.ReadableBytes));
         }
 
         protected override void Encode(IChannelHandlerContext ctx, OutputBuffer msg, List<object> output)

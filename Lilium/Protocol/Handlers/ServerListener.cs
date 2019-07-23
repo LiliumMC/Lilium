@@ -21,6 +21,7 @@ namespace Lilium.Protocol.Handlers
             {
                 case HandleStates.HandShake:
                     HandshakePacket packet = (HandshakePacket)Event.getPacket();
+                    Console.WriteLine(packet.Host);
                     break;
             }
         }

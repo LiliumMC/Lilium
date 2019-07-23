@@ -156,7 +156,7 @@ namespace Lilium.Net
             this.disconnected = true;
             if (this.packetHandleThread != null)
             {
-                this.packetHandleThread.Abort();
+                this.packetHandleThread.Interrupt();
                 this.packetHandleThread = null;
             }
         }

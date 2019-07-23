@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lilium.Protocol.Message
 {
-    enum DisconnectReason
+    public enum DisconnectReason
     {
         InGameKick,
         LoginRejected,

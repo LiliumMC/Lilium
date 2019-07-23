@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lilium.Net.Event
 {
-    class PacketReceivedEvent : ISessionEvent
+    public class PacketReceivedEvent : ISessionEvent
     {
         private Session session;
         private Packet packet;

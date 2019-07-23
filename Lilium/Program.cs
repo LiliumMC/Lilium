@@ -8,6 +8,7 @@ using Lilium.Config;
 using Lilium.Net;
 using Lilium.Protocol;
 using Lilium.Net.Handlers;
+using Lilium.Protocol.PacketLib.Version;
 
 namespace Lilium
 {
@@ -47,7 +48,7 @@ namespace Lilium
 
         static void StartListening()
         {
-            listener = new HandleServer(config.Listener.Host, config.Listener.Port, new MinecraftProtocol(), new TcpSessionFactory());
+            listener = new HandleServer(config.Listener.Host, config.Listener.Port, new MinecraftProtocol(5), new TcpSessionFactory());
             listener.Bind().Wait();
             Debug.Log(string.Format("开始监听:{0}:{1}", config.Listener.Host, config.Listener.Port));
             while (listener.isListening)

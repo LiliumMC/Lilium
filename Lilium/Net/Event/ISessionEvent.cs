@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lilium.Net.Event
 {
-    interface ISessionEvent
+    public interface ISessionEvent
     {
         void Call(ISessionListener paramListener);
     }
