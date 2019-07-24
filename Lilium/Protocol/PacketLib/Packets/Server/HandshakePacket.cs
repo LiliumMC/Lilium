@@ -11,6 +11,12 @@ namespace Lilium.Protocol.PacketLib.Packets.Server
         public string Host;
         public int Port;
         public int Intent;
+
+        public bool IsPriority { get
+            {
+                return true;
+            } }
+
         public void Read(InputBuffer input)
         {
             this.Protocol = input.ReadVarInt();

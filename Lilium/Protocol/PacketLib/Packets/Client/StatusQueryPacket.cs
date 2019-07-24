@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using Lilium.Net.IO;
 
-namespace Lilium.Protocol.PacketLib.Packets.Server
+namespace Lilium.Protocol.PacketLib.Packets.Client
 {
-    class UnknownPacket : Packet
+    class StatusQueryPacket : Packet
     {
-        public byte[] Data;
-
         public bool IsPriority { get
             {
-                return false;
+                return true;
             } }
 
         public void Read(InputBuffer input)
         {
-            this.Data = input.ReadData(input.ReadableBytes);
+            //throw new NotImplementedException();
         }
 
         public void Write(OutputBuffer output)

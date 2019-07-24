@@ -58,11 +58,15 @@ namespace Lilium.Net.IO
         }
         public short ReadShort()
         {
-            return buf.GetShort(0);
+            return buf.ReadShort();
+        }
+        public long ReadLong()
+        {
+            return buf.ReadLong();
         }
         public int ReadUnsignedShort()
         {
-            return buf.GetShort(0) & 0xFFFF;
+            return buf.ReadShort() & 0xFFFF;
         }
     }
 }

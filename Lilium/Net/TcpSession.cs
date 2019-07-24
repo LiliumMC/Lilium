@@ -52,6 +52,10 @@ namespace Lilium.Net
         {
             return packetProtocol;
         }
+        public IPEndPoint getRemoteAddress()
+        {
+            return this.channel != null ? (IPEndPoint)this.channel.RemoteAddress : null;
+        }
         public async Task Send(Packet packet)
         {
             if (channel == null)
@@ -109,9 +113,12 @@ namespace Lilium.Net
                       while (!disconnected)
                       {
                           packetHandleEvent.WaitOne();
-                          Packet packet = packets[0];
-                          packets.RemoveAt(0);
-                          CallEvent(new PacketReceivedEvent(this, packet));
+                          while (packets.Count > 0)
+                          {
+                              Packet packet = packets[0];
+                              packets.RemoveAt(0);
+                              CallEvent(new PacketReceivedEvent(this, packet));
+                          }
                       }
                   }
                   catch (Exception e)

@@ -235,7 +235,7 @@ namespace Lilium
         /// <summary>
         /// Write a string to the standard output, without newline character
         /// </summary>
-        public static void Write(string text)
+        public static void Write(object text)
         {
             if (!BasicIO)
             {
@@ -283,9 +283,9 @@ namespace Lilium
         /// <summary>
         /// Write a string to the standard output with a trailing newline
         /// </summary>
-        public static void WriteLine(string line)
+        public static void WriteLine(object line)
         {
-            Write(line + '\n');
+            Write(line.ToString() + '\n');
         }
 
         /// <summary>

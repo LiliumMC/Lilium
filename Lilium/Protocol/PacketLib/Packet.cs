@@ -9,5 +9,6 @@ namespace Lilium.Protocol.PacketLib
     {
         void Read(InputBuffer input);
         void Write(OutputBuffer output);
+        bool IsPriority { get; }
     }
 }

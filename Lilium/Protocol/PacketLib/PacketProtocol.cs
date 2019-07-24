@@ -36,5 +36,13 @@ namespace Lilium.Protocol.PacketLib
             }
             return new UnknownPacket();
         }
+        public int getOutgoingID(Packet packet)
+        {
+            if (outgoing.ContainsKey(packet.GetType()))
+            {
+                return outgoing[packet.GetType()];
+            }
+            throw new Exception("unregistered packet.");
+        }
     }
 }

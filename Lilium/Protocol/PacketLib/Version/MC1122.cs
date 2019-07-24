@@ -1,4 +1,5 @@
-﻿using Lilium.Protocol.PacketLib.Packets.Server;
+﻿using Lilium.Protocol.PacketLib.Packets.Client;
+using Lilium.Protocol.PacketLib.Packets.Server;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,11 @@ namespace Lilium.Protocol.PacketLib.Version
 
         public void initClientStatus()
         {
-            throw new NotImplementedException();
+            protocol.RegisterOutgoing<StatusQueryPacket>(0x00);
+            protocol.RegisterOutgoing<StatusPingPacket>(0x00);
+
+            protocol.RegisterIncoming<StatusResponsePacket>(0x00);
+            protocol.RegisterIncoming<StatusPongPacket>(0x01);
         }
 
         public void initServerGame()
@@ -49,7 +54,11 @@ namespace Lilium.Protocol.PacketLib.Version
 
         public void initServerStatus()
         {
-            throw new NotImplementedException();
+            protocol.RegisterIncoming<StatusQueryPacket>(0x00);
+            protocol.RegisterIncoming<StatusPingPacket>(0x01);
+
+            protocol.RegisterOutgoing<StatusResponsePacket>(0x00);
+            protocol.RegisterOutgoing<StatusPongPacket>(0x01);
         }
     }
 }

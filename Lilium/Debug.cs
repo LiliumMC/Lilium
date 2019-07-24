@@ -6,9 +6,9 @@ namespace Lilium
 {
     class Debug
     {
-        public static void Log(string text,string title=null)
+        public static void Log(object text,string title=null)
         {
-            Console.WriteLine(title == null ? text : "[" + title + "] " + text);
+            ConsoleIO.WriteLine(title == null ? text : "[" + title + "] " + text);
         }
     }
 }

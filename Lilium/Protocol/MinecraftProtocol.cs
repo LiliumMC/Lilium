@@ -57,6 +57,24 @@ namespace Lilium.Protocol
                     else
                         version.initServerHandshake();
                     break;
+                case HandleStates.Login:
+                    if (client)
+                        version.initClientLogin();
+                    else
+                        version.initServerLogin();
+                    break;
+                case HandleStates.Game:
+                    if (client)
+                        version.initClientGame();
+                    else
+                        version.initServerGame();
+                    break;
+                case HandleStates.Status:
+                    if (client)
+                        version.initClientStatus();
+                    else
+                        version.initServerStatus();
+                    break;
             }
             States = states;
         }

@@ -14,6 +14,7 @@ namespace Lilium.Net
         string getHost();
         int getPort();
         PacketProtocol getPacketProtocol();
+        IPEndPoint getRemoteAddress();
         int ProtocolVersion { get; set; }
         int CompressionTreshold { get; set; }
         bool Connected { get; }

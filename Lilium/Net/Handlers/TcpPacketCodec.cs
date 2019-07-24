@@ -1,6 +1,7 @@
 ﻿using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
+using Lilium.Net.Event;
 using Lilium.Net.IO;
 using Lilium.Protocol.PacketLib;
 using System;
@@ -22,15 +23,21 @@ namespace Lilium.Net.Handlers
         {
             InputBuffer input = new InputBuffer(msg);
             int id = input.ReadVarInt();
-            Debug.Log("id:"+id);
             Packet packet = this.session.getPacketProtocol().createIncomingPacket(id);
             packet.Read(input);
-            output.Add(packet);
+
+            if (packet.IsPriority)
+                this.session.CallEvent(new PacketReceivedEvent(session, packet));
+            else
+                output.Add(packet);
         }
 
-        protected override void Encode(IChannelHandlerContext ctx, Packet msg, List<object> output)
+        protected override void Encode(IChannelHandlerContext ctx, Packet packet, List<object> output)
         {
-            throw new NotImplementedException();
+            OutputBuffer buf = new OutputBuffer(Unpooled.Buffer());
+            buf.WriteVarInt(session.getPacketProtocol().getOutgoingID(packet));
+            packet.Write(buf);
+            output.Add(buf.getBuffer());
         }
     }
 }

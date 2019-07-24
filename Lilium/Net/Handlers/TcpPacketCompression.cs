@@ -33,7 +33,21 @@ namespace Lilium.Net.Handlers
 
         protected override void Encode(IChannelHandlerContext ctx, IByteBuffer msg, List<object> output)
         {
-            throw new NotImplementedException();
+            OutputBuffer buf = new OutputBuffer(ctx.Allocator.Buffer());
+            if (msg.ReadableBytes >= session.CompressionTreshold)
+            {
+                byte[] uncompressed = new byte[msg.ReadableBytes];
+                msg.ReadBytes(uncompressed);
+                byte[] compressed_packet = ZlibUtils.Compress(uncompressed);
+                buf.WriteVarInt(uncompressed.Length);
+                buf.WriteData(compressed_packet);
+            }
+            else
+            {
+                buf.WriteVarInt(0);
+                buf.WriteBytes(msg);
+            }
+            output.Add(buf.getBuffer());
         }
     }
 }

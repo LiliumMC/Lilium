@@ -51,7 +51,8 @@ namespace Lilium.Net.Handlers
 
                     IChannelPipeline pipeline = channel.Pipeline;
                     pipeline.AddLast("crypto", new TcpPacketEncryptor(session));
-                    pipeline.AddLast("sizer", new TcpPacketSizer(session));
+                    pipeline.AddLast("sizer_enc", new TcpPacketSizePrepender(session));
+                    pipeline.AddLast("sizer_dec", new TcpPacketSizeDecoder(session));
                     pipeline.AddLast("codec", new TcpPacketCodec(session));
                     pipeline.AddLast("manager", session);
 

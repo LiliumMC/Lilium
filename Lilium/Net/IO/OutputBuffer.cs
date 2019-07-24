@@ -50,6 +50,10 @@ namespace Lilium.Net.IO
         {
             buf.WriteShort(param);
         }
+        public void WriteLong(long param)
+        {
+            buf.WriteLong(param);
+        }
         public IByteBuffer getBuffer()
         {
             return buf;
