@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Lilium.Net
 {
-    class HandleServer
+    public class HandleServer
     {
         public string Host { get; set; }
         public int Port { get; set; }
@@ -62,10 +62,25 @@ namespace Lilium.Net
             if (session.Connected)
                 session.Disconnect(DisconnectReason.ConnectionLost, "Connection Closed.");
         }
+        public void AddListener(IServerListener listener)
+        {
+            this.listeners.Add(listener);
+        }
+        public void RemoveListener(IServerListener listener)
+        {
+            this.listeners.Remove(listener);
+        }
         public async Task Bind()
         {
             this.listener = this.factory.createServerListener(this);
             await this.listener.Bind();
+        }
+        public void CallEvent(ServerEvent Event)
+        {
+            foreach(IServerListener listener in listeners)
+            {
+                Event.Call(listener);
+            }
         }
         public async Task Close()
         {

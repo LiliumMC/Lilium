@@ -73,7 +73,7 @@ namespace Lilium.Net
             CompressionTreshold = threshold;
             if (channel != null)
             {
-                if (ProtocolVersion >= (int)MCVersion.MC18Version && CompressionTreshold > 0)
+                if (ProtocolVersion >= (int)Protocol.Version.MC18Version && CompressionTreshold > 0)
                 {
                     if (channel.Pipeline.Get("compression") == null)
                         channel.Pipeline.AddBefore("codec", "compression", new TcpPacketCompression(this));
@@ -166,6 +166,12 @@ namespace Lilium.Net
                 this.packetHandleThread.Interrupt();
                 this.packetHandleThread = null;
             }
+            if(this.channel!=null && this.channel.Open)
+            {
+                this.CallEvent(new DisconnectingEvent(this, reason, message));
+                this.channel.Flush().CloseAsync().Wait();
+            }
+            this.CallEvent(new DisconnectedEvent(this, reason, message));
         }
     }
 }

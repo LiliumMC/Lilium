@@ -8,5 +8,7 @@ namespace Lilium.Net.Event
     {
         void Connected(ConnectedEvent paramEvent);
         void PacketReceived(PacketReceivedEvent paramEvent);
+        void Disconnecting(DisconnectingEvent paramEvent);
+        void Disconnected(DisconnectedEvent paramEvent);
     }
 }

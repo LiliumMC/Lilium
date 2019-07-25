@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lilium.Net
 {
-    interface SessionFactory
+    public interface SessionFactory
     {
         ConnectionListener createServerListener(HandleServer server);
     }

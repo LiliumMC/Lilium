@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lilium
 {
-    class Debug
+    public class Debug
     {
         public static void Log(object text,string title=null)
         {

@@ -16,6 +16,14 @@ namespace Lilium.Protocol.Handlers
             //throw new NotImplementedException();
         }
 
+        public void Disconnected(DisconnectedEvent paramEvent)
+        {
+        }
+
+        public void Disconnecting(DisconnectingEvent paramEvent)
+        {
+        }
+
         public void PacketReceived(PacketReceivedEvent Event)
         {
             MinecraftProtocol protocol = (MinecraftProtocol)Event.getSession().getPacketProtocol();

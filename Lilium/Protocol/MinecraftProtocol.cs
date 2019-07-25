@@ -13,8 +13,10 @@ namespace Lilium.Protocol
     class MinecraftProtocol : PacketProtocol
     {
         public HandleStates States { get; set; } = HandleStates.HandShake;
-        private IMCVersion version;
+        private MCVersion version;
         private CryptoHandler crypto;
+
+        public MinecraftProtocol() : this(0) { }
         public MinecraftProtocol(int version)
         {
             setVersion(version);
@@ -38,11 +40,8 @@ namespace Lilium.Protocol
         {
             switch (protocol)
             {
-                case 340:
-                    version = new MC1122(this);
-                    break;
                 default:
-                    version = new MC1122(this);
+                    version = new MCDefault(this);
                     break;
             }
         }

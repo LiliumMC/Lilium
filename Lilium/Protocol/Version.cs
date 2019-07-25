@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lilium.Protocol
 {
-    enum MCVersion
+    enum Version
     {
         MC18Version = 47,
         MC19Version = 107,

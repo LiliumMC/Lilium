@@ -4,7 +4,14 @@ using System.Text;
 
 namespace Lilium.Net.Event
 {
-    class ServerAdapter:IServerListener
+    class ServerAdapter : IServerListener
     {
+        public void SessionAdded(SessionAddedEvent paramEvent)
+        {
+        }
+
+        public void SessionRemoved(SessionRemovedEvent paramEvent)
+        {
+        }
     }
 }

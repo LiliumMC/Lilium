@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lilium.Net
 {
-    interface ConnectionListener
+    public interface ConnectionListener
     {
         Task Bind();
         Task Close();

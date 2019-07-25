@@ -18,7 +18,7 @@ namespace Lilium
         internal static ILog log = null;
         internal static YamlConfig config = null;
 
-        static HandleServer listener;
+        static MCLilium listener;
         static void Main(string[] args)
         {
             Debug.Log("加载配置ing");
@@ -48,17 +48,8 @@ namespace Lilium
 
         static void StartListening()
         {
-            listener = new HandleServer(config.Listener.Host, config.Listener.Port, new MinecraftProtocol(5), new TcpSessionFactory());
-            listener.Bind().Wait();
-            Debug.Log(string.Format("开始监听:{0}:{1}", config.Listener.Host, config.Listener.Port));
-            while (listener.isListening)
-            {
-                string input = ConsoleIO.ReadLine();
-                if (input != null)
-                {
-
-                }
-            }
+            listener = new MCLilium();
+            listener.Start();
         }
     }
 }

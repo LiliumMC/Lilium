@@ -6,29 +6,29 @@ using System.Text;
 
 namespace Lilium.Protocol.PacketLib.Version
 {
-    public class MC1122 : IMCVersion
+    public class MCDefault : MCVersion
     {
         PacketProtocol protocol;
-        public MC1122(PacketProtocol protocol)
+        public MCDefault(PacketProtocol protocol)
         {
             this.protocol = protocol;
         }
-        public void initClientGame()
+        public override void initClientGame()
         {
             throw new NotImplementedException();
         }
 
-        public void initClientHandshake()
+        public override void initClientHandshake()
         {
             protocol.RegisterOutgoing<HandshakePacket>(0x00);
         }
 
-        public void initClientLogin()
+        public override void initClientLogin()
         {
-            throw new NotImplementedException();
+            protocol.RegisterOutgoing<LoginPacket>(0x00);
         }
 
-        public void initClientStatus()
+        public override void initClientStatus()
         {
             protocol.RegisterOutgoing<StatusQueryPacket>(0x00);
             protocol.RegisterOutgoing<StatusPingPacket>(0x00);
@@ -37,22 +37,22 @@ namespace Lilium.Protocol.PacketLib.Version
             protocol.RegisterIncoming<StatusPongPacket>(0x01);
         }
 
-        public void initServerGame()
+        public override void initServerGame()
         {
             throw new NotImplementedException();
         }
 
-        public void initServerHandshake()
+        public override void initServerHandshake()
         {
             protocol.RegisterIncoming<HandshakePacket>(0x00);
         }
 
-        public void initServerLogin()
+        public override void initServerLogin()
         {
-            throw new NotImplementedException();
+            protocol.RegisterIncoming<LoginPacket>(0x00);
         }
 
-        public void initServerStatus()
+        public override void initServerStatus()
         {
             protocol.RegisterIncoming<StatusQueryPacket>(0x00);
             protocol.RegisterIncoming<StatusPingPacket>(0x01);
