@@ -13,12 +13,12 @@ namespace Lilium.Protocol.PacketLib.Packets.Client
         {
             this.Time = time;
         }
-        public override void Read(InputBuffer input)
+        public override void Read(InputBuffer input, int protocol)
         {
             this.Time = input.ReadLong();
         }
 
-        public override void Write(OutputBuffer output)
+        public override void Write(OutputBuffer output, int protocol)
         {
             output.WriteLong(this.Time);
         }

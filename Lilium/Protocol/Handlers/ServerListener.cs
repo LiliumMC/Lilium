@@ -1,6 +1,6 @@
 ﻿using Lilium.Net.Event;
 using Lilium.Protocol.Data.Status;
-using Lilium.Protocol.Messge;
+using Lilium.Protocol.Message;
 using Lilium.Protocol.PacketLib.Packets.Client;
 using Lilium.Protocol.PacketLib.Packets.Server;
 using System;

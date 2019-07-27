@@ -24,7 +24,7 @@ namespace Lilium.Net.Handlers
             InputBuffer input = new InputBuffer(msg);
             int id = input.ReadVarInt();
             Packet packet = this.session.getPacketProtocol().createIncomingPacket(id);
-            packet.Read(input);
+            packet.Read(input,this.session.getPacketProtocol().Protocol);
 
             if (packet.IsPriority)
                 this.session.CallEvent(new PacketReceivedEvent(session, packet));
@@ -36,7 +36,7 @@ namespace Lilium.Net.Handlers
         {
             OutputBuffer buf = new OutputBuffer(Unpooled.Buffer());
             buf.WriteVarInt(session.getPacketProtocol().getOutgoingID(packet));
-            packet.Write(buf);
+            packet.Write(buf,this.session.getPacketProtocol().Protocol);
             output.Add(buf.getBuffer());
         }
     }

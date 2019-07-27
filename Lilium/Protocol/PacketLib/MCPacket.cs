@@ -7,13 +7,13 @@ namespace Lilium.Protocol.PacketLib
 {
     public abstract class MCPacket:Packet
     {
-        public bool IsPriority { get
+        public override bool IsPriority { get
             {
                 return false;
             } }
+        
+        public override abstract void Read(InputBuffer input, int protocol);
 
-        public abstract void Read(InputBuffer input);
-
-        public abstract void Write(OutputBuffer output);
+        public override abstract void Write(OutputBuffer output, int protocol);
     }
 }

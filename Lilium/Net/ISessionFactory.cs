@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Lilium.Net
 {
-    public interface SessionFactory
+    public interface ISessionFactory
     {
         ConnectionListener createServerListener(HandleServer server);
+        Session createClientSession(HandleClient client);
     }
 }

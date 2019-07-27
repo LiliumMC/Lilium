@@ -1,4 +1,5 @@
 ﻿using DotNetty.Buffers;
+using Lilium.Protocol.PacketLib.Version;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -53,6 +54,14 @@ namespace Lilium.Net.IO
         public void WriteLong(long param)
         {
             buf.WriteLong(param);
+        }
+        public void WriteByteArray(byte[] param,int protocol)
+        {
+            if (protocol < MCVersion.MC18Version)
+                this.WriteShort(param.Length);
+            else
+                this.WriteVarInt(param.Length);
+            this.WriteData(param);
         }
         public IByteBuffer getBuffer()
         {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lilium.Protocol.Messge
+namespace Lilium.Protocol.Message
 {
-    enum HandleStates:int
+    public enum HandleStates:int
     {
         HandShake=0,
         Login=1,

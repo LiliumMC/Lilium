@@ -5,23 +5,22 @@ using Lilium.Net.IO;
 
 namespace Lilium.Protocol.PacketLib.Packets.Server
 {
-    class UnknownPacket : Packet
+    public class UnknownPacket : Packet
     {
         public byte[] Data;
 
-        public bool IsPriority { get
+        public override bool IsPriority { get
             {
                 return false;
             } }
 
-        public void Read(InputBuffer input)
+        public override void Read(InputBuffer input, int protocol)
         {
             this.Data = input.ReadData(input.ReadableBytes);
         }
 
-        public void Write(OutputBuffer output)
+        public override void Write(OutputBuffer output, int protocol)
         {
-            //throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Lilium.Net;
+﻿using Lilium.Config;
+using Lilium.Net;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +19,10 @@ namespace Lilium.Plugins
         protected HandleServer Server { get
             {
                 return this.server;
+            } }
+        protected YamlConfig DefaultConfig { get
+            {
+                return Program.config;
             } }
         public virtual void OnLoad() { }
         public virtual void OnEnable() { }

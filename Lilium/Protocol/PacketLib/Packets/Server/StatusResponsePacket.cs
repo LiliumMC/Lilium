@@ -7,19 +7,19 @@ using Lilium.Protocol.Data.Status;
 
 namespace Lilium.Protocol.PacketLib.Packets.Server
 {
-    class StatusResponsePacket : MCPacket
+    public class StatusResponsePacket : MCPacket
     {
         StatusInfo Info;
         public StatusResponsePacket(StatusInfo info)
         {
             this.Info = info;
         }
-        public override void Read(InputBuffer input)
+        public override void Read(InputBuffer input, int protocol)
         {
             throw new NotImplementedException();
         }
 
-        public override void Write(OutputBuffer output)
+        public override void Write(OutputBuffer output, int protocol)
         {
             output.WriteString(Info.ToString());
         }

@@ -1,7 +1,7 @@
 ﻿using Lilium.Crypto;
 using Lilium.Net;
 using Lilium.Protocol.Handlers;
-using Lilium.Protocol.Messge;
+using Lilium.Protocol.Message;
 using Lilium.Protocol.PacketLib;
 using Lilium.Protocol.PacketLib.Version;
 using System;
@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Lilium.Protocol
 {
-    class MinecraftProtocol : PacketProtocol
+    public class MinecraftProtocol : PacketProtocol
     {
         public HandleStates States { get; set; } = HandleStates.HandShake;
         private MCVersion version;
@@ -19,6 +19,7 @@ namespace Lilium.Protocol
         public MinecraftProtocol() : this(0) { }
         public MinecraftProtocol(int version)
         {
+            Protocol = version;
             setVersion(version);
         }
         public override CryptoHandler getCrypto()
@@ -31,7 +32,10 @@ namespace Lilium.Protocol
             this.setProtocolState(HandleStates.HandShake, false);
             session.AddListener(new ServerListener());
         }
-
+        public override void newClientSession(Session session)
+        {
+            throw new NotImplementedException();
+        }
         public void startEncrypt(byte[] key)
         {
             this.crypto = new CryptoHandler(key);

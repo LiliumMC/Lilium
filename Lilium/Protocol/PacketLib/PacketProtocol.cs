@@ -12,9 +12,10 @@ namespace Lilium.Protocol.PacketLib
         public int Protocol { get; set; }
         private Dictionary<int, Type> incoming = new Dictionary<int, Type>();
         private Dictionary<Type, int> outgoing = new Dictionary<Type, int>();
-
+        private Cipher cipher = new Cipher();
         public abstract CryptoHandler getCrypto();
         public abstract void newServerSession(Session session);
+        public abstract void newClientSession(Session session);
         public void ClearPackets()
         {
             this.incoming.Clear();
@@ -35,6 +36,10 @@ namespace Lilium.Protocol.PacketLib
                 return (Packet)Activator.CreateInstance(incoming[id]);
             }
             return new UnknownPacket();
+        }
+        public Cipher getCipher()
+        {
+            return this.cipher;
         }
         public int getOutgoingID(Packet packet)
         {

@@ -24,23 +24,5 @@ namespace Lilium.Config
                 "pvp"
             }
         };
-
-        public List<Server> Servers { set; get; } = new List<Server>()
-        {
-            new Server()
-            {
-                Name = "lobby",
-                Address = "127.0.0.1",
-                Port = 25570,
-                Restricted = false
-            },
-            new Server()
-            {
-                Name = "pvp",
-                Address = "127.0.0.1",
-                Port = 25571,
-                Restricted = true
-            }
-        };
     }
 }

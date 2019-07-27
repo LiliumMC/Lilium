@@ -10,10 +10,10 @@ namespace Lilium.Net
 {
     public class HandleServer
     {
-        public string Host { get; set; }
-        public int Port { get; set; }
+        public string Host { get;private set; }
+        public int Port { get;private set; }
         private PacketProtocol protocol;
-        private SessionFactory factory;
+        private ISessionFactory factory;
         private ConnectionListener listener;
 
         private List<Session> sessions = new List<Session>();
@@ -26,7 +26,7 @@ namespace Lilium.Net
                 return this.listener != null && this.listener.isListening;
             }
         }
-        public HandleServer(string host,int port,PacketProtocol protocol,SessionFactory factory)
+        public HandleServer(string host,int port,PacketProtocol protocol,ISessionFactory factory)
         {
             this.Host = host;
             this.Port = port;
@@ -55,12 +55,14 @@ namespace Lilium.Net
         public void AddSession(Session session)
         {
             this.sessions.Add(session);
+            this.CallEvent(new SessionAddedEvent(session));
         }
         public void RemoveSession(Session session)
         {
             this.sessions.Remove(session);
             if (session.Connected)
                 session.Disconnect(DisconnectReason.ConnectionLost, "Connection Closed.");
+            this.CallEvent(new SessionRemovedEvent(session));
         }
         public void AddListener(IServerListener listener)
         {

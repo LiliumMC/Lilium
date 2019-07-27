@@ -4,6 +4,7 @@ using Org.BouncyCastle.Crypto.Modes;
 using Org.BouncyCastle.Crypto.Paddings;
 using Org.BouncyCastle.Crypto.Parameters;
 using System;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Lilium.Crypto
@@ -37,6 +38,12 @@ namespace Lilium.Crypto
         public int encrypt(byte[] input, int inputOffset, int inputLength, byte[] output, int outputOffset)
         {
             return enc.ProcessBytes(input, inputOffset, inputLength, output, outputOffset);
+        }
+        public static byte[] GenerateAESPrivateKey()
+        {
+            AesManaged AES = new AesManaged();
+            AES.KeySize = 128; AES.GenerateKey();
+            return AES.Key;
         }
     }
 }

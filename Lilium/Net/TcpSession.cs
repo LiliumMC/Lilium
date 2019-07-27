@@ -10,6 +10,7 @@ using Lilium.Net.Handlers;
 using Lilium.Protocol.Message;
 using Lilium.Net.Event;
 using System.Threading;
+using Lilium.Protocol.PacketLib.Version;
 
 namespace Lilium.Net
 {
@@ -73,7 +74,7 @@ namespace Lilium.Net
             CompressionTreshold = threshold;
             if (channel != null)
             {
-                if (ProtocolVersion >= (int)Protocol.Version.MC18Version && CompressionTreshold > 0)
+                if (ProtocolVersion >= (int)MCVersion.MC18Version && CompressionTreshold > 0)
                 {
                     if (channel.Pipeline.Get("compression") == null)
                         channel.Pipeline.AddBefore("codec", "compression", new TcpPacketCompression(this));
@@ -151,7 +152,7 @@ namespace Lilium.Net
             packetHandleEvent.Set();
         }
 
-        public void Connect()
+        public virtual void Connect()
         {
         }
 

@@ -26,6 +26,9 @@ namespace Lilium.Protocol.PacketLib.Version
         public override void initClientLogin()
         {
             protocol.RegisterOutgoing<LoginPacket>(0x00);
+            protocol.RegisterOutgoing<EncryptionResponsePacket>(0x01);
+
+            protocol.RegisterIncoming<EncryptionRequestPacket>(0x01);
         }
 
         public override void initClientStatus()
@@ -50,6 +53,9 @@ namespace Lilium.Protocol.PacketLib.Version
         public override void initServerLogin()
         {
             protocol.RegisterIncoming<LoginPacket>(0x00);
+            protocol.RegisterIncoming<EncryptionResponsePacket>(0x01);
+
+            protocol.RegisterOutgoing<EncryptionRequestPacket>(0x01);
         }
 
         public override void initServerStatus()

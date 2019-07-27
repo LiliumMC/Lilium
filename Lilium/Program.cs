@@ -9,6 +9,7 @@ using Lilium.Net;
 using Lilium.Protocol;
 using Lilium.Net.Handlers;
 using Lilium.Protocol.PacketLib.Version;
+using Lilium.Crypto;
 
 namespace Lilium
 {

@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Lilium.Protocol.PacketLib
 {
-    public interface Packet
+    public abstract class Packet
     {
-        void Read(InputBuffer input);
-        void Write(OutputBuffer output);
-        bool IsPriority { get; }
+        public abstract void Read(InputBuffer input,int protocol);
+        public abstract void Write(OutputBuffer output,int protocol);
+        public abstract bool IsPriority { get; }
     }
 }

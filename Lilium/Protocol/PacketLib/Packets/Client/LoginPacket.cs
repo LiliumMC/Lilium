@@ -5,7 +5,7 @@ using Lilium.Net.IO;
 
 namespace Lilium.Protocol.PacketLib.Packets.Client
 {
-    class LoginPacket : Packet
+    public class LoginPacket : Packet
     {
         public string Name;
         public LoginPacket() { }
@@ -14,17 +14,17 @@ namespace Lilium.Protocol.PacketLib.Packets.Client
             this.Name = name;
         }
 
-        public bool IsPriority { get
+        public override bool IsPriority { get
             {
                 return true;
             } }
 
-        public void Read(InputBuffer input)
+        public override void Read(InputBuffer input, int protocol)
         {
             this.Name = input.ReadString();
         }
 
-        public void Write(OutputBuffer output)
+        public override void Write(OutputBuffer output, int protocol)
         {
             output.WriteString(this.Name);
         }

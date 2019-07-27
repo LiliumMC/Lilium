@@ -1,4 +1,5 @@
 ﻿using DotNetty.Buffers;
+using Lilium.Protocol.PacketLib.Version;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -67,6 +68,13 @@ namespace Lilium.Net.IO
         public int ReadUnsignedShort()
         {
             return buf.ReadShort() & 0xFFFF;
+        }
+        public byte[] ReadByteArray(int protocol)
+        {
+            int len = protocol >= MCVersion.MC18Version
+                ? this.ReadVarInt()
+                : this.ReadShort();
+            return ReadData(len);
         }
     }
 }

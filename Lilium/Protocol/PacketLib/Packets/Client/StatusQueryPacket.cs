@@ -7,19 +7,17 @@ namespace Lilium.Protocol.PacketLib.Packets.Client
 {
     class StatusQueryPacket : Packet
     {
-        public bool IsPriority { get
+        public override bool IsPriority { get
             {
                 return true;
             } }
 
-        public void Read(InputBuffer input)
+        public override void Read(InputBuffer input, int protocol)
         {
-            //throw new NotImplementedException();
         }
 
-        public void Write(OutputBuffer output)
+        public override void Write(OutputBuffer output, int protocol)
         {
-            //throw new NotImplementedException();
         }
     }
 }
