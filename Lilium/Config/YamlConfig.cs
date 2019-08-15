@@ -13,7 +13,7 @@ namespace Lilium.Config
             Port = 25565, 
             MaxPlayers = 2333, 
             TabSize = 60, 
-            OnlineMode = true, 
+            OnlineMode = false, 
             SupportForge = true,
             IPForward = true, 
             Motd = "Another bungee implement server.", 

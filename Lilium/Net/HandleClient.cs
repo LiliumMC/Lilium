@@ -18,7 +18,7 @@ namespace Lilium.Net
             this.protocol = type;
             this.session = factory.createClientSession(this);
         }
-        public PacketProtocol CreatePacketProtocol()
+        public PacketProtocol getPacketProtocol()
         {
             return this.protocol;
         }

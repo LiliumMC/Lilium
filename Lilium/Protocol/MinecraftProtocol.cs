@@ -34,7 +34,7 @@ namespace Lilium.Protocol
         }
         public override void newClientSession(Session session)
         {
-            throw new NotImplementedException();
+            session.AddListener(new ClientListener());
         }
         public void startEncrypt(byte[] key)
         {

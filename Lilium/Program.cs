@@ -45,12 +45,22 @@ namespace Lilium
                 throw;
             }
             StartListening();
+            //debug();
+
         }
 
         static void StartListening()
         {
             listener = new MCLilium();
             listener.Start();
+        }
+        static void debug()
+        {
+            MinecraftProtocol protocol = new MinecraftProtocol();
+            HandleClient client = new HandleClient("127.0.0.1", 25570, protocol, new TcpSessionFactory());
+            client.getSession().setFlag(MinecraftConstants.NAME_KEY, "Lialy");
+            client.getSession().Connect(true);
+            Console.ReadKey();
         }
     }
 }

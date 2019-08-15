@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Lilium.Net.Handlers
 {
@@ -17,10 +18,15 @@ namespace Lilium.Net.Handlers
         {
             this.client = client;
         }
-        public override void Connect()
+        public override void Connect(bool wait)
         {
-            if (this.disconnected)
-                return;
+            if (wait)
+                Connect().Wait();
+            else
+                Connect();
+        }
+        public async Task Connect()
+        {
             try
             {
                 Bootstrap bootstrap = new Bootstrap();
@@ -42,7 +48,9 @@ namespace Lilium.Net.Handlers
                     pipeline.AddLast("manager", this);
 
                 }));
-                bootstrap.ConnectAsync(IPAddress.Parse(this.getHost()), this.getPort()).Wait();
+                Debug.Log(this.getHost() + ":" + this.getPort());
+                await bootstrap.ConnectAsync(IPAddress.Parse(this.getHost()), this.getPort());
+                Debug.Log(this.getHost() + ":" + this.getPort());
             }
             catch(Exception e)
             {

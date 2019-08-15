@@ -16,7 +16,14 @@ namespace Lilium.Protocol.PacketLib.Packets.Client
             {
                 return true;
             } }
-
+        public HandshakePacket() { }
+        public HandshakePacket(int protocol,string host,int port,int intent)
+        {
+            this.ProtocolNum = protocol;
+            this.Host = host;
+            this.Port = port;
+            this.Intent = intent;
+        }
         public override void Read(InputBuffer input, int protocol)
         {
             this.ProtocolNum = input.ReadVarInt();
@@ -27,7 +34,10 @@ namespace Lilium.Protocol.PacketLib.Packets.Client
 
         public override void Write(OutputBuffer output, int protocol)
         {
-            throw new NotImplementedException();
+            output.WriteVarInt(this.ProtocolNum);
+            output.WriteString(this.Host);
+            output.WriteShort(this.Port);
+            output.WriteVarInt(this.Intent);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Lilium.Net
         private string Host { get; set; }
         private int Port { get; set; }
         private PacketProtocol packetProtocol { get; set; }
+        private Dictionary<string, object> flags = new Dictionary<string, object>();
         private List<ISessionListener> listeners = new List<ISessionListener>();
         protected IChannel channel;
         public int ProtocolVersion { get; set; }
@@ -56,6 +57,16 @@ namespace Lilium.Net
         public IPEndPoint getRemoteAddress()
         {
             return this.channel != null ? (IPEndPoint)this.channel.RemoteAddress : null;
+        }
+        public object getFlag(string key)
+        {
+            if (flags.ContainsKey(key))
+                return flags[key];
+            throw new NullReferenceException("找不到对象");
+        }
+        public void setFlag(string key,object value)
+        {
+            flags.Add(key, value);
         }
         public async Task Send(Packet packet)
         {
@@ -152,7 +163,7 @@ namespace Lilium.Net
             packetHandleEvent.Set();
         }
 
-        public virtual void Connect()
+        public virtual void Connect(bool wait)
         {
         }
 
